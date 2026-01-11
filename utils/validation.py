@@ -2,6 +2,7 @@
 Input validation utilities for quant-fundamentals.
 Provides comprehensive parameter validation with helpful error messages.
 """
+# Version: 2026-01-11 11:15
 
 import numpy as np
 import pandas as pd
@@ -129,8 +130,14 @@ def validate_weights(weights: np.ndarray, allow_short: bool = False) -> None:
     -------
     ValidationError : If weights are invalid
     """
+    # Robust check for Pandas-like objects (handle potential multiple pandas imports in memory)
+    if hasattr(weights, 'values'):
+        weights = weights.values
+        if hasattr(weights, 'flatten'):
+            weights = weights.flatten()
+            
     if not isinstance(weights, np.ndarray):
-        raise ValidationError("Weights must be a numpy array")
+        raise ValidationError(f"Weights must be a numpy array or pandas Series, got {type(weights).__name__}")
     
     if weights.ndim != 1:
         raise ValidationError(f"Weights must be 1-dimensional, got shape {weights.shape}")
@@ -152,21 +159,16 @@ def validate_weights(weights: np.ndarray, allow_short: bool = False) -> None:
         raise ValidationError("Weights contain NaN or inf values")
 
 
-def validate_covariance_matrix(cov_matrix: np.ndarray) -> None:
+def validate_covariance_matrix_v3(cov_matrix):
     """
-    Validate covariance matrix.
-    
-    Parameters:
-    -----------
-    cov_matrix : np.ndarray
-        Covariance matrix
-    
-    Raises:
-    -------
-    ValidationError : If covariance matrix is invalid
+    Validate covariance matrix and return as numpy array.
     """
+    # Robust check for Pandas-like objects
+    if hasattr(cov_matrix, 'values') and not isinstance(cov_matrix, np.ndarray):
+        cov_matrix = cov_matrix.values
+        
     if not isinstance(cov_matrix, np.ndarray):
-        raise ValidationError("Covariance matrix must be a numpy array")
+        raise ValidationError(f"Covariance matrix must be a numpy array (v3), got {type(cov_matrix).__name__}")
     
     if cov_matrix.ndim != 2:
         raise ValidationError(f"Covariance matrix must be 2D, got shape {cov_matrix.shape}")
@@ -207,13 +209,12 @@ def validate_returns(returns: Union[np.ndarray, pd.Series]) -> None:
     -------
     ValidationError : If returns are invalid
     """
-    if isinstance(returns, pd.Series):
+    if hasattr(returns, 'values'):
         returns_array = returns.values
     elif isinstance(returns, np.ndarray):
         returns_array = returns
     else:
-        raise ValidationError(f"Returns must be numpy array or pandas Series, "
-                            f"got {type(returns)}")
+        raise ValidationError(f"Returns must be numpy array or pandas Series, got {type(returns).__name__}")
     
     if len(returns_array) == 0:
         raise ValidationError("Returns array is empty")

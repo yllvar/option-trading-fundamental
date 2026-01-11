@@ -4,12 +4,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import yfinance as yf
-from markowitz import (
+from portfolio.markowitz import (
     portfolio_return, portfolio_volatility, 
     optimize_min_variance, optimize_sharpe, optimize_target_return
 )
-from efficient_frontier import compute_efficient_frontier, generate_random_portfolios
-from risk_parity import optimize_risk_parity, risk_contribution
+from portfolio.efficient_frontier import compute_efficient_frontier, generate_random_portfolios
+from portfolio.risk_parity import optimize_risk_parity, risk_contribution
 
 # Set style
 plt.style.use('seaborn-v0_8-whitegrid')

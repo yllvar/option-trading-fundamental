@@ -1,0 +1,8 @@
+[server]
+# Standardize the server configuration to prevent internal routing confusion
+baseUrlPath = ""
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false

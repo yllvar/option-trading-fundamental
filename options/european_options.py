@@ -2,7 +2,7 @@
 European option pricing using Monte Carlo simulation.
 """
 import numpy as np
-from gbm import simulate_gbm
+from options.gbm import simulate_gbm
 
 
 def price_european_call(S0, K, r, sigma, T, n_paths=10000, n_steps=252):

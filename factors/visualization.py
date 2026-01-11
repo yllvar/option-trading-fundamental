@@ -5,8 +5,8 @@ Visualization tools for factor model analysis.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from ff3_model import FF3Model
-from data_loader import fetch_ff_factors, fetch_stock_returns, align_data
+from factors.ff3_model import FF3Model
+from factors.data_loader import fetch_ff_factors, fetch_stock_returns, align_data
 
 
 def plot_rolling_betas(ticker, window=252, period='5y'):

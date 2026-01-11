@@ -28,7 +28,7 @@ def black_scholes_put(S0, K, r, sigma, T):
 
 
 if __name__ == "__main__":
-    from european_options import price_european_call, price_european_put
+    from options.european_options import price_european_call, price_european_put
     
     # Parameters
     S0 = 100

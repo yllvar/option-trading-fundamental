@@ -2,10 +2,10 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from gbm import simulate_gbm
-from greeks import delta_call, gamma, vega, theta_call
-from black_scholes import black_scholes_call
-from european_options import price_european_call, price_european_put
+from options.gbm import simulate_gbm
+from options.greeks import delta_call, gamma, vega, theta_call
+from options.black_scholes import black_scholes_call
+from options.european_options import price_european_call, price_european_put
 
 # Set style
 plt.style.use('seaborn-v0_8-whitegrid')

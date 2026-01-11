@@ -4,9 +4,9 @@ Visualization tools for option pricing analysis.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from gbm import simulate_gbm
-from greeks import delta_call, gamma, vega, theta_call
-from black_scholes import black_scholes_call
+from options.gbm import simulate_gbm
+from options.greeks import delta_call, gamma, vega, theta_call
+from options.black_scholes import black_scholes_call
 
 
 def plot_gbm_paths(S0=100, mu=0.08, sigma=0.20, T=1.0, n_paths=20, n_steps=252):
@@ -109,7 +109,7 @@ def plot_greeks_vs_spot(K=100, T=0.25, r=0.05, sigma=0.20):
 
 def plot_convergence(S0=100, K=100, T=0.25, r=0.05, sigma=0.20):
     """Plot Monte Carlo convergence to Black-Scholes price."""
-    from european_options import price_european_call as monte_carlo_call
+    from options.european_options import price_european_call as monte_carlo_call
     
     bs_price = black_scholes_call(S0, K, T, r, sigma)
     

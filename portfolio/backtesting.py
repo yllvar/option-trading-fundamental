@@ -6,9 +6,9 @@ Tests allocation strategies on historical data.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from data_loader import fetch_prices, calculate_returns
-from markowitz import optimize_sharpe, optimize_min_variance
-from risk_parity import optimize_risk_parity
+from portfolio.data_loader import fetch_prices, calculate_returns
+from portfolio.markowitz import optimize_sharpe, optimize_min_variance
+from portfolio.risk_parity import optimize_risk_parity
 
 
 def backtest_portfolio(prices, weights, rebalance_freq='M'):

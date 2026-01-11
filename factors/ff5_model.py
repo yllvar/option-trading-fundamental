@@ -6,7 +6,7 @@ Extends FF3 with profitability (RMW) and investment (CMA) factors.
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-from data_loader import fetch_ff_factors, fetch_stock_returns, align_data
+from factors.data_loader import fetch_ff_factors, fetch_stock_returns, align_data
 
 
 class FF5Model:
@@ -38,6 +38,10 @@ class FF5Model:
         
         X = sm.add_constant(X)
         
+        # Force exactly matching indices to prevent any alignment conflicts during fitting
+        y.index = X.index
+        
+        # OLS regression
         self.model = sm.OLS(y, X)
         self.results = self.model.fit()
         
@@ -121,7 +125,7 @@ def compare_ff3_ff5(ticker, period='5y'):
     """
     Compare FF3 and FF5 model results for a stock.
     """
-    from ff3_model import FF3Model
+    from factors.ff3_model import FF3Model
     
     print(f"Fetching data for {ticker}...")
     stock_returns = fetch_stock_returns(ticker, period=period)

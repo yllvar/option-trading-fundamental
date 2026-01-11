@@ -138,30 +138,102 @@ def fetch_stock_returns(ticker, start_date=None, end_date=None, period='5y'):
     import yfinance as yf
     
     if start_date and end_date:
-        data = yf.download(ticker, start=start_date, end=end_date, progress=False)
+        data = yf.download(ticker, start=start_date, end=end_date, progress=False, auto_adjust=True)
     else:
-        data = yf.download(ticker, period=period, progress=False)
+        data = yf.download(ticker, period=period, progress=False, auto_adjust=True)
     
-    prices = data['Adj Close']
+    if data.empty:
+        return pd.Series()
+        
+    # Standardize to a Series of prices
+    if isinstance(data.columns, pd.MultiIndex):
+        prices = data['Close'][ticker] if ticker in data['Close'] else data['Close'].iloc[:, 0]
+    else:
+        prices = data['Close']
+        
     returns = prices.pct_change().dropna()
-    
     return returns
 
 
 def align_data(stock_returns, factor_data):
     """
     Align stock returns with factor data on common dates.
+    Handles potential Pandas Index name conflicts.
     """
+    # Ensure we are working with Series/DataFrames
+    if isinstance(stock_returns, pd.DataFrame):
+        # Handle MultiIndex or multiple columns
+        if isinstance(stock_returns.columns, pd.MultiIndex):
+            # Try to grab 'Close' or 'Adj Close'
+            found = False
+            for col in ['Close', 'Adj Close']:
+                if col in stock_returns.columns.get_level_values(0):
+                    stock_returns = stock_returns[col].iloc[:, 0]
+                    found = True
+                    break
+            if not found:
+                stock_returns = stock_returns.iloc[:, 0]
+        else:
+            # Single level columns
+            cols = stock_returns.columns
+            if 'Adj Close' in cols:
+                stock_returns = stock_returns['Adj Close']
+            elif 'Close' in cols:
+                stock_returns = stock_returns['Close']
+            else:
+                stock_returns = stock_returns.iloc[:, 0]
+
+    # Crucial: Clear ALL index names (including MultiIndex levels) to prevent "cannot join with no overlapping index names"
+    if hasattr(stock_returns.index, 'names'):
+        stock_returns.index.names = [None] * len(stock_returns.index.names)
+    if hasattr(factor_data.index, 'names'):
+        factor_data.index.names = [None] * len(factor_data.index.names)
+    
+    # Also handle MultiIndex in indices (force to simple DatetimeIndex if possible)
+    if isinstance(stock_returns.index, pd.MultiIndex):
+        stock_returns.index = stock_returns.index.get_level_values(0)
+    if isinstance(factor_data.index, pd.MultiIndex):
+        factor_data.index = factor_data.index.get_level_values(0)
+
+    # Ensure stock_returns is 1D Series for the subtraction
+    if isinstance(stock_returns, pd.DataFrame):
+        stock_returns = stock_returns.iloc[:, 0]
+
+    # Normalize indices to dates (strip time and timezone) for reliable intersection
+    if hasattr(stock_returns.index, 'tz_localize'):
+        try:
+            stock_returns.index = stock_returns.index.tz_localize(None).normalize()
+        except:
+            stock_returns.index = stock_returns.index.normalize()
+    
+    if hasattr(factor_data.index, 'tz_localize'):
+        try:
+            factor_data.index = factor_data.index.tz_localize(None).normalize()
+        except:
+            factor_data.index = factor_data.index.normalize()
+
     # Find common dates
     common_dates = stock_returns.index.intersection(factor_data.index)
     
+    if len(common_dates) == 0:
+        # Return empty but with correct structure
+        return pd.Series(dtype=float), pd.DataFrame(columns=factor_data.columns)
+        
     stock_aligned = stock_returns.loc[common_dates]
     factors_aligned = factor_data.loc[common_dates]
     
-    # Calculate excess returns
-    excess_returns = stock_aligned - factors_aligned['RF']
+    # Ensure they are numeric
+    stock_val = pd.to_numeric(stock_aligned, errors='coerce')
+    rf_val = pd.to_numeric(factors_aligned['RF'], errors='coerce')
     
-    return excess_returns, factors_aligned
+    # Calculate excess returns using numpy values to bypass all Pandas alignment issues
+    excess_returns = pd.Series(
+        stock_val.values - rf_val.values,
+        index=common_dates,
+        name='Excess Return'
+    )
+    
+    return excess_returns.dropna(), factors_aligned
 
 
 if __name__ == "__main__":

@@ -2,7 +2,32 @@
 
 From-scratch Python implementations of foundational quantitative finance methods. Built to understand the core mathematics, not to compete with production libraries.
 
-**Status:** ✅ Fully Functional | 📚 Comprehensive Documentation | 🔧 Recently Audited & Fixed
+**Status:** ✅ Fully Functional | 📚 Comprehensive Documentation | 🔧 Recently Audited & Fixed | 🌐 Interactive Web Interface
+
+---
+
+## 🌐 Interactive Web Interface (NEW!)
+
+**Professional web application built with Streamlit** - No coding required!
+
+### Quick Start
+```bash
+./run_app.sh
+# or
+streamlit run app/main.py
+```
+
+Access at: `http://localhost:8501`
+
+### Features
+- **📊 Options Pricing** - Black-Scholes, Monte Carlo (parallel), Greeks calculation
+- **💼 Portfolio Optimization** - Markowitz, Risk Parity, Efficient Frontier
+- **📈 Factor Models** - Fama-French 3-Factor and 5-Factor analysis
+- **Interactive Charts** - Plotly visualizations with hover tooltips
+- **Real-time Calculations** - Instant results with progress indicators
+- **Professional UI** - Clean, modern design with custom styling
+
+![Streamlit App](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
 
 ---
 

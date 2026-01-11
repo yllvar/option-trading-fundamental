@@ -6,7 +6,7 @@ R_i - R_f = α + β_mkt(R_m - R_f) + β_smb(SMB) + β_hml(HML) + ε
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
-from data_loader import fetch_ff_factors, fetch_stock_returns, align_data
+from factors.data_loader import fetch_ff_factors, fetch_stock_returns, align_data
 
 
 class FF3Model:
@@ -48,6 +48,9 @@ class FF3Model:
         
         # Add constant for alpha
         X = sm.add_constant(X)
+        
+        # Force exactly matching indices to prevent any alignment conflicts during fitting
+        y.index = X.index
         
         # OLS regression
         self.model = sm.OLS(y, X)

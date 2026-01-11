@@ -129,7 +129,7 @@ def compare_allocations(mean_returns, cov_matrix, risk_free_rate=0.02):
     """
     Compare different allocation strategies.
     """
-    from markowitz import (
+    from portfolio.markowitz import (
         optimize_sharpe, optimize_min_variance, 
         portfolio_return, portfolio_volatility, portfolio_sharpe
     )

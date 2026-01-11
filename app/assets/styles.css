@@ -1,0 +1,263 @@
+/* Quant Fundamentals - Ultra-Premium Professional Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Global Reset & Base Typography */
+.stApp {
+    background-color: #ffffff !important;
+    font-family: 'Inter', -apple-system, sans-serif !important;
+}
+
+/* CRITICAL: Global Text Color Control */
+.stApp p,
+.stApp li,
+.stApp label,
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+.stApp h5,
+.stApp h6,
+.stApp [data-testid="stMarkdownContainer"] {
+    color: #0f172a;
+    /* Base dark slate */
+}
+
+/* Override for readable body text */
+.stApp p,
+.stApp li,
+[data-testid="stMarkdownContainer"] p {
+    color: #1e293b !important;
+    line-height: 1.6 !important;
+}
+
+/* 🧪 FORMULA VISIBILITY FIX (KaTeX & Markdown Code Blocks) */
+
+/* 1. Markdown Code Blocks (Triple Backticks) */
+div[data-testid="stMarkdownContainer"] pre,
+div[data-testid="stMarkdownContainer"] code,
+.stMarkdown pre,
+.stMarkdown code {
+    background-color: #0d1117 !important;
+    /* GitHub obsidian */
+    border: 1px solid #30363d !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Force Light Text inside Code Blocks */
+div[data-testid="stMarkdownContainer"] pre *,
+div[data-testid="stMarkdownContainer"] code,
+div[data-testid="stMarkdownContainer"] code span,
+.stMarkdown pre *,
+.stMarkdown code {
+    color: #f8fafc !important;
+    /* Off-white */
+    text-shadow: none !important;
+}
+
+/* 2. KaTeX / st.latex Visibility */
+.katex,
+.katex-display,
+.katex * {
+    color: #0f172a !important;
+    /* Formulas on white background should be dark */
+}
+
+/* Ensure formulas inside dark info boxes are visible */
+[data-testid="stNotification"] .katex,
+[data-testid="stNotification"] .katex * {
+    color: #f8fafc !important;
+}
+
+/* Headers - Strong Contrast */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Feature Header */
+.main-header {
+    font-size: 3.5rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    margin-bottom: 0.5rem;
+}
+
+.sub-header {
+    font-size: 1.4rem;
+    color: #64748b !important;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+/* Feature cards */
+.feature-card,
+.metric-card {
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: #3b82f6;
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+    background: #ffffff;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
+}
+
+.feature-description {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* Metric Cards */
+.metric-card {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 1) 100%);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.05em;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Sidebar - Deep Space Theme */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 100%) !important;
+}
+
+/* Force light text for everything in sidebar */
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] li,
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3,
+[data-testid="stSidebar"] h4,
+[data-testid="stSidebar"] .stMarkdown p,
+[data-testid="stSidebar"] .stText,
+[data-testid="stSidebar"] .stWidgetLabel p {
+    color: #f8fafc !important;
+}
+
+/* Specific fix for radio button and select labels */
+[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"]>p {
+    color: #f8fafc !important;
+}
+
+/* Sub-containers in sidebar for grouped widgets */
+[data-testid="stSidebar"] div[data-testid="stVerticalBlock"]>div {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Launch Buttons Styling */
+.stButton button {
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    padding: 0.6rem 1.2rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton button[kind="primary"] {
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+}
+
+.stButton button[kind="secondary"] {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+.stButton button:hover {
+    filter: brightness(1.1) !important;
+    transform: scale(1.02) !important;
+}
+
+/* Footer Section */
+.footer-container {
+    padding: 6rem 0 3rem 0;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
+}
+
+.footer-container p {
+    color: #94a3b8 !important;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-container a {
+    color: #3b82f6 !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* --- Widget & Component Overrides (Main App Area) --- */
+[data-testid="stMetricValue"] {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+}
+
+/* Ensure dataframes and tables are readable */
+[data-testid="stTable"] td,
+[data-testid="stTable"] th,
+.stDataFrame div {
+    color: #0f172a !important;
+}
+
+/* Sidebar Specific Code Blocks & Expander Text */
+[data-testid="stSidebar"] code {
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+[data-testid="stSidebar"] .stExpander label p {
+    color: #f8fafc !important;
+}

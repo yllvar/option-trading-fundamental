@@ -5,7 +5,7 @@ The efficient frontier represents optimal risk-return tradeoffs.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from markowitz import (
+from portfolio.markowitz import (
     portfolio_return, portfolio_volatility, portfolio_sharpe,
     optimize_min_variance, optimize_sharpe, optimize_target_return
 )

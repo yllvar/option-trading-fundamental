@@ -54,7 +54,7 @@ open htmlcov/index.html
 from utils.validation import (
     validate_option_params,
     validate_weights,
-    validate_covariance_matrix,
+    validate_covariance_matrix_v3,
     ValidationError
 )
 
@@ -73,7 +73,7 @@ validate_non_negative(value, name)          # value >= 0
 validate_probability(value, name)           # 0 <= value <= 1
 validate_option_params(S0, K, r, sigma, T)  # All option params
 validate_weights(weights, allow_short)      # Portfolio weights
-validate_covariance_matrix(cov_matrix)      # Covariance matrix
+validate_covariance_matrix_v3(cov_matrix)   # Covariance matrix (v3 robust)
 validate_returns(returns)                   # Returns data
 validate_monte_carlo_params(n_paths, n_steps)  # MC params
 ```
@@ -183,14 +183,14 @@ except Exception as e:
 ### Portfolio Optimization with All Features
 ```python
 from portfolio.markowitz import optimize_sharpe
-from utils.validation import validate_covariance_matrix, ValidationError
+from utils.validation import validate_covariance_matrix_v3, ValidationError
 from utils.logging_config import get_default_logger, PerformanceLogger
 
 logger = get_default_logger(__name__)
 
 try:
     # Validate inputs
-    validate_covariance_matrix(cov_matrix)
+    validate_covariance_matrix_v3(cov_matrix)
     
     # Optimize with performance logging
     with PerformanceLogger(logger, "Portfolio optimization"):

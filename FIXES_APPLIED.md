@@ -351,5 +351,29 @@ except Exception as e:
 
 ---
 
-**Last Updated:** January 10, 2026  
-**Status:** ✅ All Critical Fixes Applied
+**Last Updated:** January 11, 2026  
+**Status:** ✅ All Critical Fixes & UI Stability Applied
+
+---
+
+## January 11, 2026: UI Stability & Data Alignment Fixes 🚀
+
+### 1. Factor Analysis Alignment Fix
+**Issue:** `KeyError` or empty results when aligning yfinance data with Fama-French factors.
+**Fix:** 
+- Standardized timestamp normalization (tz-aware to naive, time component removal).
+- Improved `align_data` to return correctly structured empty frames if no overlap exists.
+- Fixed `FF3Model` and `FF5Model` regression fits to retain metadata for parameter extraction.
+
+### 2. Portfolio Optimization Type Errors
+**Issue:** `Validation Error: Covariance matrix must be a numpy array` (cached type mismatches).
+**Fix:**
+- Implemented **Duck Typing** in validation logic (`hasattr(x, 'values')`).
+- Introduced `validate_covariance_matrix_v3` to bypass state streamlit caches.
+- Added forced module reloads (`importlib.reload`) on page entry.
+
+### 3. General UI & Logic Hardening
+- ✅ Fixed `NameError: n_assets` on Portfolio page.
+- ✅ Added diagnostic debug sidebars.
+- ✅ Improved LaTeX formula visibility in light/dark modes.
+- ✅ Updated `QUICK_REFERENCE.md` with new robust validation APIs.

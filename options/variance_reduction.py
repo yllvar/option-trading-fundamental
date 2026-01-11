@@ -4,10 +4,10 @@ Demonstrates antithetic variates and control variates.
 """
 
 import numpy as np
-from gbm import simulate_gbm
-from european_options import price_european_call as monte_carlo_call
-from european_options import price_european_put as monte_carlo_put
-from black_scholes import black_scholes_call
+from options.gbm import simulate_gbm
+from options.european_options import price_european_call as monte_carlo_call
+from options.european_options import price_european_put as monte_carlo_put
+from options.black_scholes import black_scholes_call
 
 
 def antithetic_variates_call(S0, K, T, r, sigma, n_paths=100000):

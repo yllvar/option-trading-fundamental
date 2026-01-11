@@ -7,3 +7,9 @@ statsmodels>=0.13.0
 requests>=2.26.0
 pytest>=7.0.0
 pytest-cov>=3.0.0
+
+# Streamlit Web Interface
+streamlit>=1.30.0
+plotly>=5.18.0
+streamlit-aggrid>=0.3.4
+streamlit-option-menu>=0.3.6

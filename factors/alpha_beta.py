@@ -5,9 +5,9 @@ Performance attribution and risk decomposition.
 
 import numpy as np
 import pandas as pd
-from ff3_model import FF3Model
-from ff5_model import FF5Model
-from data_loader import fetch_ff_factors, fetch_stock_returns, align_data
+from factors.ff3_model import FF3Model
+from factors.ff5_model import FF5Model
+from factors.data_loader import fetch_ff_factors, fetch_stock_returns, align_data
 
 
 def decompose_returns(ticker, model_type='3', period='5y'):
